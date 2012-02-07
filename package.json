@@ -1,0 +1,26 @@
+{
+	"author": "Juraj Vitko (ypocat.com)",
+	"name": "nodejsdb",
+	"description": "Intrinsic datastores for Node.js",
+	"keywords": [ "database", "datastore", "v8", "query", "persistence", "db", "addon", "plugin", "pluggable", "native", "sql", "nosql", "newsql" ],
+	"version": "0.0.1",
+	"homepage": "http://github.com/ypocat/nodejsdb",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/ypocat/nodejsdb.git"
+	},
+	"main": "./lib/nodejsdb.js",
+	"directories": {
+		"lib": "./lib"
+	},
+	"engines": {
+		"node": "*"
+	},
+	"dependencies": {
+	},
+	"devDependencies": {
+	},
+	"licenses": [
+		{  "type" : "MIT", "url" : "https://raw.github.com/ypocat/nodejsdb/master/LICENSE" }
+	]
+}
