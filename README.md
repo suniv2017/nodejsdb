@@ -63,7 +63,7 @@ So the idea here is to bring datastore functionality and scripting into the same
 	
 	- event emitter
 	
-	- atomic ops? transactions?
+	- atomic ops? transactions? (plan ahead for the concurrent impl?)
 
 - provide drop-in replaceable implementations with varying tradeoffs:
 
@@ -77,7 +77,7 @@ So the idea here is to bring datastore functionality and scripting into the same
 
 	- single-process - fast, but multiple cores and multiple Nodes cannot work with the same data, clustering must be applied
 	
-	- shared-memory implementation - certain overhead and latency but higher total performance up from a certain number of cores
+	- shared-memory implementation - certain overhead and latency but higher total performance up from a certain number of cores (atomic ops and async API necessary at this point)
 
 ### Notes
 
