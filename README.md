@@ -51,15 +51,33 @@ So the idea here is to bring datastore functionality and scripting into the same
 
 * ~~Is v8 good for in-memory data storage? Data would be first class citizen and a lot of wheel-reinventing could be avoided. v8 translates JS directly into machine code, how to best leverage this?~~ -- A [simple test](https://gist.github.com/1869292) on [Node v0.7.4 Mac](http://nodejs.org/dist/v0.7.4/node-v0.7.4.pkg) revealed that on my 2,8GHz dual core machine, about 40M objects is where v8 starts to choke. Given the high level of optimization already done in v8, it's probably safe to assume that any significant improvement of v8's GC on the current architecture is not possible, at least not without adding significant memory usage overhead, or without significant rewrite of the current implementation. New possibilities are on the horizon in the form of GPU-supported GC, albeit patent-encumbered (see [here](http://www.google.com/patents/US20100082930) and [here](http://www.google.com/patents/US20110219204)), but we've already seen a lot worse situations where patent-free solutions were developed working-around the existing patents, e.g. WebM vs. H.264, and many others. However at the present time (2/2012), it is best not to consider node/v8 as a good storage for large number of objects.
 
-* Would shared memory managed by a native Node addon be a better data storage? Custom memory allocation could be employed. A process could be spawned to hold the shared memory segment continuously allocated across Node restarts. Multiple Nodes could share the segment. Would shared Buffers be a good mechanism to exchange data between v8 and the shared memory?
-
-* What is the smallest set of primitive datastore operations, on top of which a good subset of e.g. SQL could be implemented?
-
-* What visualization tools do we have available (or can develop) to enable our brain to understand existing data storage algorithms in the depth necessary for their optimized implementation in contemporary environments (OS, CPU, GPU, ASIC)?
-
 ### Plans
 
-* Datastore with 3 structures: LLRB (ordered map), Map (fast unordered map) and a Deque (fast and memory efficient list), with a custom (delete by incremental sweep) memory allocator in-process but out-heap, sync and async API (async for later compat with shared-mem and out-process impls), and an efficient secondary-storage persistence mechanism (append-only+snapshots vs sstable). Add key timeouts and data events.
+- decide on a good primitive data structures and operation set which would allow to model most used DB cases, including pub-sub
+
+	- binary safe keys and data
+
+	- map, ordered-map, deque
+	
+	- key timeouts
+	
+	- event emitter
+	
+	- atomic ops? transactions?
+
+- provide drop-in replaceable implementations with varying tradeoffs:
+
+	- all data in memory (with or without secondary storage) - fastest, RAM-limited
+	
+	- all keys in memory - still pretty fast, not-so RAM-limited
+	
+	- keys and data in memory on-demand
+
+- provide further variations:
+
+	- single-process - fast, but multiple cores and multiple Nodes cannot work with the same data, clustering must be applied
+	
+	- shared-memory implementation - certain overhead and latency but higher total performance up from a certain number of cores
 
 ### Notes
 
