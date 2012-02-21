@@ -2,7 +2,7 @@
 
 Experimental project. Runnable artefacts will be published as standalone npm modules, and by various authors.
 
-Add your comments in the form of [Issues](https://github.com/ypocat/nodejsdb/issues).
+Add your comments in the form of [Issues](https://github.com/ypocat/nodejsdb/issues), or contribute to [this discussion](http://groups.google.com/group/nodejs/browse_frm/thread/1ec2908cd5fafa28).
 
 ### Rationale
 
