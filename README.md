@@ -1,6 +1,8 @@
 # Intrinsic datastores for Node.js (nodejsdb)
 
-Experimental project. Runnable artefacts will be published as standalone npm modules.
+Experimental project. Runnable artefacts will be published as standalone npm modules, and by various authors.
+
+Add your comments in the form of [Issues](https://github.com/ypocat/nodejsdb/issues).
 
 ### Rationale
 
