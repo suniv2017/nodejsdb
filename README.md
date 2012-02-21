@@ -47,6 +47,7 @@ So the idea here is to bring datastore functionality and scripting into the same
 - [Alfred](https://github.com/pgte/alfred) - "a fast in-process key-value store for node.js"
 - [awesome](https://github.com/janl/awesome) - "A Redis implementation in node.js"
 - [nedis](https://github.com/visionmedia/nedis) - "Redis server implementation written with nodejs"
+- [EventVat](https://github.com/hij1nx/eventvat) - "evented in-process key/value store with an API like that of Redis"
 
 
 ### Scratchpad
