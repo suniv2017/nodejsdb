@@ -94,6 +94,8 @@ So the idea here is to bring datastore functionality and scripting into the same
 
 * [Left Leaning Red-Black Trees](http://www.cs.princeton.edu/~rs/talks/LLRB/08Penn.pdf)
 
+* [Cache Craftiness for Fast Multicore Key-Value Storage](http://read.seas.harvard.edu/~kohler/pubs/mao12cache.pdf)
+
 * [Pattern matching on GPU](http://dcs.ics.forth.gr/Activities/papers/gpupattern.iiswc11.pdf)
 
 * [Linux Kernel is getting GPU support](http://www.cs.utah.edu/~wbsun/kgpu.pdf)
