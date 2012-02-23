@@ -96,6 +96,12 @@ So the idea here is to bring datastore functionality and scripting into the same
 
 * [Cache Craftiness for Fast Multicore Key-Value Storage](http://read.seas.harvard.edu/~kohler/pubs/mao12cache.pdf)
 
+* [Locality-sensitive hashing](http://en.wikipedia.org/wiki/Locality-sensitive_hashing)
+
+* [CityHash - a string hashing library developed and used at Google](http://code.google.com/p/cityhash/)
+
+* [MurmurHash - a fast hashing library](http://code.google.com/p/smhasher/)
+
 * [Pattern matching on GPU](http://dcs.ics.forth.gr/Activities/papers/gpupattern.iiswc11.pdf)
 
 * [Linux Kernel is getting GPU support](http://www.cs.utah.edu/~wbsun/kgpu.pdf)
