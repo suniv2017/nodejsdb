@@ -84,6 +84,8 @@ So the idea here is to bring datastore functionality and scripting into the same
 
 ### Notes
 
+* [Know Your Engines, How to Make Your JavaScript Fast](http://people.mozilla.com/~dmandelin/KnowYourEngines_Velocity2011.pdf)
+
 * [Mac OS X Server v10.6: Adjusting Shared memory segment values](http://support.apple.com/kb/HT4022)
 
 * [864GB RAM for $12,000](http://37signals.com/svn/posts/3090-basecamp-nexts-caching-hardware)
