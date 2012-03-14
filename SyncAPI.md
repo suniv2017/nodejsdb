@@ -80,7 +80,8 @@ db.on.mycollection = function(name, key, value, previous) {
 		previous: the previous value that was replaced
 
 	Spec:
-		1. after each `.set()` which changes the database state, event is triggered if handler is registered
+		1. after each `.set()` which changes the database state,
+			an event is triggered if a handler for it is registered
 		2. by default, handlers are registered under the collection name
 		3. this collection name registration can be overriden with the `event` parameter of `.set()`
 		4. since this is a synchronous API, you have to return from the handler synchronously (and fast)
