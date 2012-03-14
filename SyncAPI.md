@@ -44,7 +44,8 @@ db.set(name, key, value, event);
 		event: optional; override the name of the callback; see Events below
 
 	Spec:
-		1. both key and value support (and store the type of): String, Number, Boolean, Buffer, Object, Array
+		1. both key and value support (and store the type of):
+			String, Number, Boolean, Buffer, Object, Array
 		2. Object and Array are serialized without checking for cyclic dependencies
 		3. everything except Number is compared (and stored) as binary string
 		4. Number compared with binary string always compares lower (is ordered in front of it)
@@ -79,7 +80,7 @@ db.on.mycollection = function(name, key, value, previous) {
 		previous: the previous value that was replaced
 
 	Spec:
-		1. after each `.set()` which changes the database state, an event is triggered if a handler is registered
+		1. after each `.set()` which changes the database state, event is triggered if handler is registered
 		2. by default, handlers are registered under the collection name
 		3. this collection name registration can be overriden with the `event` parameter of `.set()`
 		4. since this is a synchronous API, you have to return from the handler synchronously (and fast)
@@ -273,8 +274,10 @@ if(!db.size('users')) {
 	db.set('user', 'user2', { login: 'user@two' });
 	db.set('user', 'user3', { login: 'user@three' });
 
-	db.set('message', db.size('messages') + 1, { text: 'hello 1', sender: 'user1', recipients: [ 'user2', 'user3' ]});
-	db.set('message', db.size('messages') + 1, { text: 'hello 2', sender: 'user2', recipients: [ 'user1', 'user3' ]});
+	db.set('message', db.size('messages') + 1,
+		{ text: 'hello 1', sender: 'user1', recipients: [ 'user2', 'user3' ]});
+	db.set('message', db.size('messages') + 1,
+		{ text: 'hello 2', sender: 'user2', recipients: [ 'user1', 'user3' ]});
 }
 
 console.log('Inbox for user1');
