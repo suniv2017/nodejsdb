@@ -38,7 +38,7 @@ db.set(name, key, value, event);
 
 /*
 	Parameters:
-		name: name of the ordered map
+		name: name of the collection
 		key: the key
 		value: the value to set or overwrite
 		event: optional; override the name of the callback; see Events below
@@ -110,7 +110,7 @@ db.get(name, key);
 
 /*
 	Parameters:
-		name: name of the ordered map
+		name: name of the collection
 		key: the key
 	
 	Spec:
@@ -131,7 +131,7 @@ db.range(name, descending, from, to, limit);
 
 /*
 	Parameters:
-		name: name of the ordered map
+		name: name of the collection
 		descending: optional; true if the traversal order is in descending order, false for ascending
 		from: optional; what key to start at, inclusive; use `null` for start at the edge
 		to: optional; what key to end at, inclusive; use `null` to end at the edge
@@ -159,7 +159,7 @@ db.size(name);
 
 /*
 	Parameters:
-		name: name of the ordered map
+		name: name of the collection
 		
 	Spec:
 		1. returns the number of keys in the map
