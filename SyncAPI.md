@@ -276,9 +276,9 @@ if(!db.size('users')) {
 	db.set('user', 'user3', { login: 'user@three' });
 
 	db.set('message', db.size('messages') + 1,
-		{ text: 'hello 1', sender: 'user1', recipients: [ 'user2', 'user3' ]});
+		{ text: 'hello 1', sender: 'user1', recipients: [ 'user2', 'user3' ], date: Date.now() });
 	db.set('message', db.size('messages') + 1,
-		{ text: 'hello 2', sender: 'user2', recipients: [ 'user1', 'user3' ]});
+		{ text: 'hello 2', sender: 'user2', recipients: [ 'user1', 'user3' ], date: Date.now()});
 }
 
 console.log('Inbox for user1');
