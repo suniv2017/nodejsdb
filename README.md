@@ -4,6 +4,10 @@ Experimental project. Runnable artefacts will be published as standalone npm mod
 
 Add your comments in the form of [Issues](https://github.com/ypocat/nodejsdb/issues), or contribute to [this discussion](http://groups.google.com/group/nodejs/browse_frm/thread/1ec2908cd5fafa28).
 
+### News
+
+Proposed base Synchronous API is [here](https://github.com/ypocat/nodejsdb/blob/master/SyncAPI.md).
+
 ### Rationale
 
 Few years ago, server-side JavaScript was unimaginable. Today, at the beginning of 2012, more and more businesses increasingly rely on high-performance, low-development-costs, short time-to-market, and [explosively growing ecosystem](http://search.npmjs.org/) of [libraries](https://github.com/joyent/node/wiki/modules) of the _[Node.js](http://nodejs.org/) platform_. However Node.js is not an exception, but rather a confirmation of the rule that JavaScript is the most potent environment for software evolution available today. Other notable JavaScript ecosystems with explosive growth are [Firefox Extensions](https://addons.mozilla.org/en-US/firefox/extensions/), [OS X Dashboard Widgets](http://www.apple.com/downloads/dashboard/), [Chrome Extensions](https://chrome.google.com/webstore/category/extensions), and of course the _client side_ of the web, with millions of libraries, frameworks and applications.
@@ -85,7 +89,9 @@ So the idea here is to bring datastore functionality and scripting into the same
 	
 ### API
 
-Proposed base API is [here](https://github.com/ypocat/nodejsdb/blob/master/SyncAPI.md).
+Proposed base Synchronous API is [here](https://github.com/ypocat/nodejsdb/blob/master/SyncAPI.md).
+
+Asynchronous API will be added in the future.
 	
 
 ### Notes

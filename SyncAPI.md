@@ -233,7 +233,7 @@ db.on.messagesReceivedBy = function(name, key, value, previous) {
 
 	// do something generic for the 'messagesReceivedBy-<userID>' collection class
 	
-	var userID = parseInt(/-(\d+)^/.match(name)[1], 10);
+	var userID = parseInt(/-(\d+)$/.exec(name)[1], 10);
 };
 
 // get incoming messages for a user, ordered from newest to oldest
