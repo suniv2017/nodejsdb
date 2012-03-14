@@ -48,7 +48,7 @@ So the idea here is to bring datastore functionality and scripting into the same
 - [awesome](https://github.com/janl/awesome) - "A Redis implementation in node.js"
 - [nedis](https://github.com/visionmedia/nedis) - "Redis server implementation written with nodejs"
 - [EventVat](https://github.com/hij1nx/eventvat) - "evented in-process key/value store with an API like that of Redis"
-
+- [PouchDB](https://github.com/mikeal/pouchdb) - "Portable CouchDB JavaScript implementation"
 
 ### Scratchpad
 
@@ -81,6 +81,12 @@ So the idea here is to bring datastore functionality and scripting into the same
 	- single-process - fast, but multiple cores and multiple Nodes cannot work with the same data, clustering must be applied
 	
 	- shared-memory implementation - certain overhead and latency but higher total performance up from a certain number of cores (atomic ops and async API necessary at this point)
+	
+	
+### API
+
+Proposed base API is [here](https://github.com/ypocat/nodejsdb/blob/master/SyncAPI.md).
+	
 
 ### Notes
 
