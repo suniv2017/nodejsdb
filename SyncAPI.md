@@ -174,7 +174,7 @@ db.size(name);
 		
 	Spec:
 		1. returns the number of keys in the map
-		2. called with null `name` returns the size the root collection,
+		2. called with null `name` returns the size of the root collection,
 			which contains all the other named collections
 	
 	Examples:
