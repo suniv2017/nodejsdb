@@ -144,7 +144,8 @@ db.range(name, descending, from, to, limit);
 		1. result is aray of objects with properties key: and value:
 		2. keys and values are decoded to their original types
 		3. if the map is non-existent, returns an empty array
-		4. range called with null `name` operates on the root collection contaning all the other collections
+		4. range called with null `name` operates on the root collection,
+			which contains all the other named collections
 	
 	Examples:
 */
