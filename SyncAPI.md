@@ -23,9 +23,9 @@ db.set('users', 1234, { fname: 'abc', lname: 'def' });
 
 var user1234 = db.get('users', 1234);
 
-var subset = db.range('users', true, 10, 20);
+var subset = db.range('users', true, 1200, 1300);
 
-var sz = db.size();
+var sz = db.size('users');
 
 ```
 
@@ -144,7 +144,7 @@ db.range(name, descending, from, to, limit);
 		1. result is aray of objects with properties key: and value:
 		2. keys and values are decoded to their original types
 		3. if the map is non-existent, returns an empty array
-		4. range called with null `name` operates on the root collection,
+		4. called with null `name` operates on the root collection,
 			which contains all the other named collections
 	
 	Examples:
@@ -174,11 +174,17 @@ db.size(name);
 		
 	Spec:
 		1. returns the number of keys in the map
+		2. called with null `name` returns the size the root collection,
+			which contains all the other named collections
 	
 	Examples:
 */
 
+// get number of users
 var sz = db.size('users');
+
+// get number of collections in this DB
+var all = db.size();
 
 ```
 
