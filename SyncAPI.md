@@ -310,7 +310,7 @@ getSentItemsForUser('user1').forEach(function(v) {
 
 ```
 
-The above schema implemented in SQL (MySQL variant):
+Functional equivalent of the above schema, implemented in SQL (the MySQL variant):
 
 ```sql
 create table users (
