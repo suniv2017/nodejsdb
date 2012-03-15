@@ -309,3 +309,40 @@ getSentItemsForUser('user1').forEach(function(v) {
 // yup, that's it!
 
 ```
+
+The above schema implemented in SQL (MySQL variant):
+
+```sql
+create table users (
+	id varchar(255) primary key,
+	login varchar(255));
+
+create table messages (
+	id serial primary key,
+	sender varchar(255) references users(id) on delete cascade,
+	text varchar(500),
+	date timestamp, index(date));
+
+create table recipients (
+	message bigint unsigned references messaages(id) on delete cascade,
+	user varchar(255) references users(id) on delete cascade);
+	
+delimiter $$;
+
+create procedure get_inbox_for_user(in _user varchar(255))
+proc:begin
+	select * from recipients r, messages m
+		where user = _user, r.message = m.id order by m.date desc;
+end;
+$$
+
+create procedure get_sent_items_for_user(in _user varchar(255))
+proc:begin
+	select * from messages m
+		where m.sender = _user order by m.date desc;
+end;
+$$
+
+delimiter ;
+
+```
