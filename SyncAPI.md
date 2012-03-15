@@ -1,5 +1,5 @@
 ## nodejsdb
-# Synchronous API Specification
+# Synchronous API Specification v1
 
 The base structure that should be sufficient for most use cases is a key-value map with ordered key elements. In the context of synchronous API, this structure is fully contained in fast memory (RAM).
 
@@ -223,7 +223,6 @@ db.on.users = function(name, key, value, previous) {
 };
 
 db.on.messages = function(name, key, value, previous) {
-
 	if(!value) {
 		
 		// handle Message deletion, remove from senders
@@ -254,7 +253,7 @@ db.on.messagesReceivedBy = function(name, key, value, previous) {
 // get incoming messages for a user, ordered from newest to oldest
 function getInboxForUser(userId) {
 	var messages = [];
-	db.range('messagesReceivedBy-' + userId, false).forEach(function(v) {
+	db.range('messagesReceivedBy-' + userId, true).forEach(function(v) {
 		messages.push(db.get('messages', v.value));
 	});
 	return messages;
@@ -263,7 +262,7 @@ function getInboxForUser(userId) {
 // get sent items for a user, ordered from newest to oldest
 function getSentItemsForUser(userId) {
 	var messages = [];
-	db.range('messagesSentBy-' + userId, false).forEach(function(v) {
+	db.range('messagesSentBy-' + userId, true).forEach(function(v) {
 		messages.push(db.get('messages', v.value));
 	});
 	return messages;
@@ -310,7 +309,7 @@ getSentItemsForUser('user1').forEach(function(v) {
 
 ```
 
-Functional equivalent of the above schema, implemented in SQL (the MySQL variant):
+Functional equivalent of the above schema and logic, implemented in SQL (the MySQL variant):
 
 ```sql
 create table users (
