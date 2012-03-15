@@ -181,31 +181,6 @@ var sz = db.size('users');
 
 ```
 
-
-## Root Level Operations
-
-```js
-db.set('users', null);
-
-// or simply:
-
-db.set('users');
-```
-
-```js
-db.range(null);
-
-// or simply:
-
-db.range();
-
-// or with parameters:
-
-db.range(null, direction, 'mycolA', 'mycolZ', 10);
-```
-
-
-
 ## Example
 
 A simple schema with 2 models: __User__ and __Message__, where one sender can message multiple recipients. The storage API is hypothetical. This example uses `Array.forEach` for brevity, but in a high-performant code you probably want to use [something else](http://jsperf.com/fore-vs-for/2).
