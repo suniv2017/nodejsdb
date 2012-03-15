@@ -320,7 +320,7 @@ create table users (
 create table messages (
 	id serial primary key,
 	sender varchar(255) references users(id) on delete cascade,
-	text varchar(500),
+	text_ varchar(500),
 	date timestamp, index(date));
 
 create table recipients (
