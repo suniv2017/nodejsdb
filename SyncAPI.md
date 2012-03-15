@@ -381,7 +381,7 @@ call create_message_recipient(_msgid, 'user3');
 select 'Inbox for user1' as msg;
 call get_inbox_for_user('user1');
 
-select 'Sent Items for user1';
+select 'Sent Items for user1' as msg;
 call get_sent_items_for_user('user1');
 
 ```
