@@ -363,13 +363,20 @@ insert into users (id, login) value ('user2', 'user@two');
 insert into users (id, login) value ('user3', 'user@three');
 
 declare _msgid bigint unsigned;
+
 call create_message('user1', 'hello 1', _msgid);
+
 call create_message_recipient(_msgid, 'user2');
 call create_message_recipient(_msgid, 'user3');
+-- alternative:
+-- insert into recipient (message, user) values (_msgid, 'user2'), (_msgid, 'user3');
 
-call create_message('user2', 'hello 2');
+call create_message('user2', 'hello 2', _msgid);
+
 call create_message_recipient(_msgid, 'user1');
 call create_message_recipient(_msgid, 'user3');
+-- alternative:
+-- insert into recipient (message, user) values (_msgid, 'user1'), (_msgid, 'user3');
 
 select 'Inbox for user1' as msg;
 call get_inbox_for_user('user1');
