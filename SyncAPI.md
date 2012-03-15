@@ -286,9 +286,9 @@ storage.loading = false;
 if(!db.size('users')) {
 	console.log('Creating data...');
 	
-	db.set('user', 'user1', { login: 'user@one' });
-	db.set('user', 'user2', { login: 'user@two' });
-	db.set('user', 'user3', { login: 'user@three' });
+	db.set('users', 'user1', { login: 'user@one' });
+	db.set('users', 'user2', { login: 'user@two' });
+	db.set('users', 'user3', { login: 'user@three' });
 
 	db.set('message', db.size('messages') + 1,
 		{ text: 'hello 1', sender: 'user1', recipients: [ 'user2', 'user3' ], date: Date.now() });
@@ -321,13 +321,26 @@ create table messages (
 	id serial primary key,
 	sender varchar(255) references users(id) on delete cascade,
 	text_ varchar(500),
-	date timestamp, index(date));
+	date timestamp default now, index(date));
 
 create table recipients (
 	message bigint unsigned references messaages(id) on delete cascade,
 	user varchar(255) references users(id) on delete cascade);
 	
 delimiter $$;
+
+create procedure create_message(in _sender varchar(255), in _text text, out _msgid bigint unsigned)
+proc:begin
+	insert into messages (sender, text_) value (_sender, _text);
+	set _msgid = last_insert_id();
+end;
+$$
+
+create procedure create_message_recipient(in _message bigint unsigned, in _recipient varchar(255))
+proc:begin
+	insert into recipient (message, user) value (_message, _recipient);
+end;
+$$
 
 create procedure get_inbox_for_user(in _user varchar(255))
 proc:begin
@@ -344,5 +357,24 @@ end;
 $$
 
 delimiter ;
+
+insert into users (id, login) value ('user1', 'user@one');
+insert into users (id, login) value ('user2', 'user@two');
+insert into users (id, login) value ('user3', 'user@three');
+
+declare _msgid bigint unsigned;
+call create_message('user1', 'hello 1', _msgid);
+call create_message_recipient(_msgid, 'user2');
+call create_message_recipient(_msgid, 'user3');
+
+call create_message('user2', 'hello 2');
+call create_message_recipient(_msgid, 'user1');
+call create_message_recipient(_msgid, 'user3');
+
+select 'Inbox for user1' as msg;
+call get_inbox_for_user('user1');
+
+select 'Sent Items for user1';
+call get_sent_items_for_user('user1');
 
 ```
