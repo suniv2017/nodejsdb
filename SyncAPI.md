@@ -40,8 +40,8 @@ db.set(name, key, value, event);
 	Parameters:
 		name: name of the collection
 		key: the key
-		value: the value to set or overwrite
-		event: optional; override the name of the callback; see Events below
+		value: the value to create, overwrite, or delete
+		event: optional; override the name of the callback; see "Set Event" below
 
 	Spec:
 		1. both key and value support (and store the type of):
@@ -50,12 +50,13 @@ db.set(name, key, value, event);
 		3. everything except Number is compared (and stored) as binary string
 		4. Number compared with binary string always compares lower (is ordered in front of it)
 		5. setting `null` as value deletes the key (thus no explicit delete operation)
-		6. `null` keys are not supported (implementation dependent behavior)
+		6. `null` keys are not supported
 		7. on insufficient memory, an exception is thrown with message 'out of memory'
 		8. `true` is returned if the DB was changed:
 		  8a. on delete, the key was existing and deleted
 		  8b. on set, the key did not exist
 		  8c. on set, the key did exist but had a different value
+		9. collection is automatically created/deleted when the first key is added/last key removed
 		
 	Examples:
 */
@@ -63,6 +64,8 @@ db.set(name, key, value, event);
 db.set('users', 'mykey', { fname: 'abc', lname: 'def', created: Date.now() });
 
 db.set('usersByScore', 123.456, 123);
+
+db.set('users', 'mykey'); // delete 'mykey'
 ```
 
 ### Set Event
@@ -83,7 +86,7 @@ db.on.mycollection = function(name, key, value, previous) {
 		1. after each `.set()` which changes the database state,
 			an event is triggered if a handler for it is registered
 		2. by default, handlers are registered under the collection name
-		3. this collection name registration can be overriden with the `event` parameter of `.set()`
+		3. this collection name registration can be overriden using the `event` parameter of `.set()`
 		4. since this is a synchronous API, you have to return from the handler synchronously (and fast)
 
 	Examples:
@@ -141,6 +144,7 @@ db.range(name, descending, from, to, limit);
 		1. result is aray of objects with properties key: and value:
 		2. keys and values are decoded to their original types
 		3. if the map is non-existent, returns an empty array
+		4. range called with null `name` operates on the root collection contaning all the other collections
 	
 	Examples:
 */
@@ -150,6 +154,12 @@ var res = db.range('usersByName', true, 'A', 'Z', 10); // res = [ { key: , value
 res.forEach(function(v) {
 	myusers.push(db.get('users', v.value));
 });
+
+// list all collections in the database
+db.range();
+
+// same as above but with parameters
+db.range(null, false, 'mycolA', 'mycolZ', 100);
 ```
 
 ### Size
@@ -170,7 +180,31 @@ db.size(name);
 var sz = db.size('users');
 
 ```
-	
+
+
+## Root Level Operations
+
+```js
+db.set('users', null);
+
+// or simply:
+
+db.set('users');
+```
+
+```js
+db.range(null);
+
+// or simply:
+
+db.range();
+
+// or with parameters:
+
+db.range(null, direction, 'mycolA', 'mycolZ', 10);
+```
+
+
 
 ## Example
 
