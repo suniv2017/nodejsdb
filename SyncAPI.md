@@ -1,5 +1,5 @@
 ## nodejsdb
-# Synchronous API Specification v1
+# Synchronous API Specification v1 (draft)
 
 The base structure that should be sufficient for most use cases is a key-value map with ordered key elements. In the context of synchronous API, this structure is fully contained in fast memory (RAM).
 
@@ -20,11 +20,8 @@ To maintain maximum implementation and usage flexibility, the API doesn't specif
 var db = require('the-impl');
 
 db.set('users', 1234, { fname: 'abc', lname: 'def' });
-
 var user1234 = db.get('users', 1234);
-
 var subset = db.range('users', true, 1200, 1300);
-
 var sz = db.size('users');
 
 ```
@@ -33,19 +30,17 @@ var sz = db.size('users');
 
 ### Set
 
-```js
-db.set(name, key, value, event);
+	db.set(name, key, value, event);
 
-/*
-	Parameters:
+	Parameters
 		name: name of the collection
 		key: the key
 		value: the value to create, overwrite, or delete
 		event: optional; override the name of the callback; see "Set Event" below
 
-	Spec:
+	Spec
 		1. both key and value support (and store the type of):
-			String, Number, Boolean, Buffer, Object, Array
+		    String, Number, Boolean, Object, Array, Buffer
 		2. Object and Array are serialized without checking for cyclic dependencies
 		3. everything except Number is compared (and stored) as binary string
 		4. Number compared with binary string always compares lower (is ordered in front of it)
@@ -58,135 +53,109 @@ db.set(name, key, value, event);
 		  8c. on set, the key did exist but had a different value
 		9. collection is automatically created/deleted when the first key is added/last key removed
 		
-	Examples:
-*/
-
-db.set('users', 'mykey', { fname: 'abc', lname: 'def', created: Date.now() });
-
-db.set('usersByScore', 123.456, 123);
-
-db.set('users', 'mykey'); // delete 'mykey'
-```
+	Examples
+		db.set('users', 'mykey', { fname: 'abc', lname: 'def', created: Date.now() });
+		db.set('usersByScore', 123.456, 123);
+		db.set('users', 'mykey'); // delete 'mykey'
 
 ### Set Event
 
-```js
-db.on.mycollection = function(name, key, value, previous) {
-	// your handler code here
-};
+	db.on.mycollection = function(name, key, value, previous) {
+		// your handler code here
+	};
 
-/*
-	Parameters:
+	Parameters
 		name: name of the collection that was changed
 		key: the key
 		value: the value that was set, `null` for deleted
 		previous: the previous value that was replaced
 
-	Spec:
+	Spec
 		1. after each `.set()` which changes the database state,
 			an event is triggered if a handler for it is registered
 		2. by default, handlers are registered under the collection name
 		3. this collection name registration can be overriden using the `event` parameter of `.set()`
 		4. since this is a synchronous API, you have to return from the handler synchronously (and fast)
 
-	Examples:
-*/
+	Examples
+		// classic example:
+		db.on.myCollection = function(name, key, value, previous) {
+			// `name` is 'myCollection'
+		};
+		db.set('myCollection', 'somekey', 'somevalue');
 
-// classic example:
-db.on.myCollection = function(name, key, value, previous) {
-	// `name` is 'myCollection'
-};
-db.set('myCollection', 'somekey', 'somevalue');
-
-// example of event type overriding:
-db.on.myDynamicCollection = function(name, key, value, previous) {
-	// `name` will be 'myDynamicCollection-12456' for the example `set` below
-};
-db.set('myDynamicCollection-12456', 'somekey', 'somevalue', 'myDynamicCollection');
-
-```
+		// example of event type overriding:
+		db.on.myDynamicCollection = function(name, key, value, previous) {
+			// `name` will be 'myDynamicCollection-12456' for the example `set` below
+		};
+		db.set('myDynamicCollection-12456', 'somekey', 'somevalue', 'myDynamicCollection');
 
 ### Get
 
-```js
-db.get(name, key);
+	db.get(name, key);
 
-/*
-	Parameters:
+	Parameters
 		name: name of the collection
 		key: the key
 	
-	Spec:
+	Spec
 		1. data is returned in the type it was stored under
 		2. the key doesn't have to match the original type, but it has to match when binary-serialized
 		3. null is returned for non-existent keys
 		
-	Examples:
-*/
-
-var val = db.get('users', 'mykey');
-```
+	Example
+		var val = db.get('users', 'userkey');
 
 ### Range
 
-```js
-db.range(name, descending, from, to, limit);
 
-/*
-	Parameters:
+	db.range(name, descending, from, to, limit);
+
+	Parameters
 		name: name of the collection
 		descending: optional; true if the traversal order is in descending order, false for ascending
 		from: optional; what key to start at, inclusive; use `null` for start at the edge
 		to: optional; what key to end at, inclusive; use `null` to end at the edge
 		limit: optional; max number of results to return
 		
-	Spec:
+	Spec
 		1. result is aray of objects with properties key: and value:
 		2. keys and values are decoded to their original types
 		3. if the map is non-existent, returns an empty array
 		4. called with null `name` operates on the root collection,
 			which contains all the other named collections
 	
-	Examples:
-*/
+	Examples
+		var res = db.range('usersByName', true, 'A', 'Z', 10); // res = [ { key: , value: }, ... ]
 
-var res = db.range('usersByName', true, 'A', 'Z', 10); // res = [ { key: , value: }, ... ]
+		res.forEach(function(v) {
+			myusers.push(db.get('users', v.value));
+		});
 
-res.forEach(function(v) {
-	myusers.push(db.get('users', v.value));
-});
+		// list all collections in the database
+		db.range();
 
-// list all collections in the database
-db.range();
-
-// same as above but with parameters
-db.range(null, false, 'mycolA', 'mycolZ', 100);
-```
+		// same as above but with parameters
+		db.range(null, false, 'mycolA', 'mycolZ', 100);
 
 ### Size
 
-```js
-db.size(name);
+	db.size(name);
 
-/*
-	Parameters:
+	Parameters
 		name: name of the collection
 		
-	Spec:
+	Spec
 		1. returns the number of keys in the map
 		2. called with null `name` returns the size of the root collection,
 			which contains all the other named collections
 	
-	Examples:
-*/
+	Examples
+		// get number of users
+		var sz = db.size('users');
 
-// get number of users
-var sz = db.size('users');
-
-// get number of collections in this DB
-var all = db.size();
-
-```
+		// get number of collections in this DB
+		var all = db.size();
 
 ## Example
 
