@@ -1,5 +1,5 @@
 ## nodejsdb
-# Synchronous API Specification v1 (draft)
+# Synchronous API Specification v1
 
 The base structure that should be sufficient for most use cases is a key-value map with ordered key elements. In the context of synchronous API, this structure is fully contained in fast memory (RAM).
 
